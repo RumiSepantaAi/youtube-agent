@@ -104,7 +104,8 @@ Alle Abhängigkeiten werden automatisch im Notebook installiert.
 
 ## 🧪 Beispiel-Output
 
-Siehe [youtube-agent/example.md) für ein vollständiges Beispiel.
+Siehe [Beispiel-Output](examples/example_output.md) für ein vollständiges Beispiel.
+
 
 ## ⚠️ Limitationen & Grenzen
 
