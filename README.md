@@ -104,7 +104,7 @@ Alle Abhängigkeiten werden automatisch im Notebook installiert.
 
 ## 🧪 Beispiel-Output
 
-Siehe [Beispiel-Output](examples/example_output.md) für ein vollständiges Beispiel.
+Siehe [Beispiel-Output](example_output.md) für ein vollständiges Beispiel.
 
 
 ## ⚠️ Limitationen & Grenzen
