@@ -110,7 +110,7 @@ Siehe [Beispiel-Output](example_output.md) für ein vollständiges Beispiel.
 ## ⚠️ Limitationen & Grenzen
 
 ### Technische Limitationen
-- **Videolänge:** Optimiert für 2-5 Minuten (längere Videos könnten Token-Limits überschreiten)
+- **Videolänge:** Optimiert für 2-5 Minuten (längere Videos benötigen - Chunkingstrategie)
 - **Transkript-Verfügbarkeit:** Benötigt Untertitel oder Auto-Captions
 - **Sprache:** Priorisiert Deutsch/Englisch; andere Sprachen möglich aber ungetestet
 - **Zitat-Mapping:** ~85% Genauigkeit; bei ähnlichen Aussagen kann es Verwechslungen geben
