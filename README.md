@@ -52,7 +52,7 @@ run_pipeline(TEST_URL)
 The Markdown file is saved under `output/<slug>.md`.
 
 ## 🏗️ Architecture
-```
+
 YouTube URL
     ↓
 [Transcript Acquisition]
@@ -79,7 +79,7 @@ YouTube URL
     ↓
 [Markdown Generation]
 └── output/<slug>.md
-```
+
 
 ### Technical Decisions
 
