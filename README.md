@@ -1,33 +1,33 @@
 # YouTube AI Agent
 
-AI-Agent zur automatischen Erstellung strukturierter Markdown-Notizen aus YouTube-Videos (2-5 Minuten).
+AI agent for automatically generating structured Markdown notes from YouTube videos (2–5 minutes).
 
 ## 🎯 Use Case & USP
 
-**Zielgruppe:** Wissensarbeiter, Studenten, Content-Kuratoren, die schnell Inhalte aus YouTube-Videos erfassen müssen.
+**Target audience:** Knowledge workers, students, content curators who need to quickly extract information from YouTube videos.
 
-**Nutzen:**
-- Spart 80% der Zeit beim Notizen machen
-- Konsistente, strukturierte Dokumentation
-- Automatische Zeitstempel für wichtige Zitate
-- Wiederverwendbare, durchsuchbare Markdown-Notizen
+**Benefits:**
+- Saves ~80% of the time spent taking notes
+- Consistent, structured documentation
+- Automatic timestamps for important quotes
+- Reusable, searchable Markdown notes
 
 **USP:**
-- Robuste Transkript-Beschaffung (mehrere Fallbacks)
-- Intelligentes Zitat-Mapping mit Zeitstempeln
-- Bereinigung von UI-Artefakten ([Musik], etc.)
-- Single-Shot LLM-Ansatz (effizient, keine Chunking-Komplexität)
+- Robust transcript acquisition (multiple fallbacks)
+- Intelligent quote-to-timestamp mapping
+- Cleanup of UI artifacts ([Music], etc.)
+- Single-shot LLM approach (efficient, no chunking complexity)
 
-## 📋 Output-Format
+## 📋 Output Format
 
-Die generierten Markdown-Notizen enthalten:
+The generated Markdown notes include:
 
-- **TL;DR** (3-5 Bullet Points)
-- **Kernaussagen** (6-10 präzise Fakten)
-- **Struktur/Outline** (5-8 logische Abschnitte)
-- **Zitate mit Zeitstempel** (bis zu 4 wörtliche Zitate mit Minute:Sekunde)
-- **Glossar** (wichtige Begriffe erklärt)
-- **Offene Fragen** (weiterführende Themen)
+- **TL;DR** (3–5 bullet points)
+- **Key Takeaways** (6–10 precise facts)
+- **Structure / Outline** (5–8 logical sections)
+- **Quotes with Timestamps** (up to 4 verbatim quotes with minute:second)
+- **Glossary** (explanations of key terms)
+- **Open Questions** (follow-up topics)
 
 ## 🚀 Quick Start
 
@@ -35,61 +35,61 @@ Die generierten Markdown-Notizen enthalten:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RumiSepantaAi/youtube-agent/blob/main/notebook.ipynb)
 
-### 2. OpenAI API Key setzen
+### 2. Set OpenAI API Key
 
-Im Colab Notebook:
-- Klicke auf das 🔑 Secrets-Icon (links)
-- Füge `OPENAI_API_KEY` hinzu mit deinem API-Key
+In the Colab notebook:
+- Click the 🔑 Secrets icon (left side)
+- Add `OPENAI_API_KEY` with your API key
 
-### 3. Notebook ausführen
+### 3. Run the Notebook
 ```python
-# Einfach die URL anpassen und ausführen:
-TEST_URL = "https://www.youtube.com/watch?v=deine-video-id"
+# Just adapt the URL and run:
+TEST_URL = "https://www.youtube.com/watch?v=your-video-id"
 run_pipeline(TEST_URL)
-```
 
-### 4. Ergebnis herunterladen
+### 4. Download the result
 
-Die Markdown-Datei wird unter `output/<slug>.md` gespeichert.
+The Markdown file is saved under `output/<slug>.md`.
 
-## 🏗️ Architektur
+## 🏗️ Architecture
 ```
 YouTube URL
     ↓
-[Transkript-Beschaffung]
-├── youtube-transcript-api (primär: manuell → auto)
+[Transcript Acquisition]
+├── youtube-transcript-api (primary: manual → auto)
 └── yt-dlp (fallback: subtitles → auto-captions)
     ↓
-[Bereinigung]
-├── HTML-Tags entfernen
-├── UI-Artefakte filtern ([Musik], (Applaus), ♪)
-└── Duplikate in kurzen Zeitfenstern eliminieren
+[Cleanup]
+├── Remove HTML tags
+├── Filter UI artifacts ([Music], (Applause), ♪)
+└── Eliminate duplicates in short time windows
     ↓
-[LLM-Extraktion] (Single-Shot JSON)
-├── Zusammenfassung (TL;DR)
-├── Kernaussagen extrahieren
-├── Struktur/Outline erstellen
-├── Wörtliche Zitate finden
-├── Glossar generieren
-└── Offene Fragen identifizieren
+[LLM Extraction] (Single-Shot JSON)
+├── Summary (TL;DR)
+├── Extract key takeaways
+├── Generate structure/outline
+├── Identify verbatim quotes
+├── Generate glossary
+└── Identify open questions
     ↓
-[Zitat-Mapping]
-├── Segmente zu Sätzen gruppieren (max 220 chars)
-├── Token-basierte Ähnlichkeitssuche
-└── Zeitstempel zuordnen (min. 20s Abstand)
+[Quote Mapping]
+├── Group segments into sentences (max 220 chars)
+├── Token-based similarity search
+└── Assign timestamps (min. 20s spacing)
     ↓
-[Markdown-Generierung]
+[Markdown Generation]
 └── output/<slug>.md
 ```
 
-### Technische Entscheidungen
+### Technical Decisions
 
-| Aspekt | Entscheidung | Begründung |
-|--------|--------------|------------|
-| **Transkript-Quelle** | youtube-transcript-api + yt-dlp | Robustheit durch Fallback-Chain |
-| **LLM-Ansatz** | Single-Shot JSON | Effizient für 2-5 Min Videos, keine Chunking-Komplexität |
-| **Zitat-Mapping** | Token-Overlap + Substring-Heuristik | Funktioniert ohne externe NLP-Libs (scikit-learn, spaCy) |
-| **Bereinigung** | Regex + Whitelist-Logik | Entfernt 95% der UI-Artefakte zuverlässig |
+| Aspect                | Decision                             | Rationale                                             |
+| --------------------- | ------------------------------------ | ----------------------------------------------------- |
+| **Transcript source** | youtube-transcript-api + yt-dlp      | Robustness via fallback chain                         |
+| **LLM approach**      | Single-shot JSON                     | Efficient for 2–5 min videos, no chunking complexity  |
+| **Quote mapping**     | Token overlap + substring heuristics | Works without external NLP libs (scikit-learn, spaCy) |
+| **Cleanup**           | Regex + whitelist logic              | Reliably removes ~95% of UI artifacts                 |
+
 
 ## 📦 Dependencies
 ```
@@ -100,30 +100,29 @@ openai>=1.40.0
 requests>=2.31.0
 ```
 
-Alle Abhängigkeiten werden automatisch im Notebook installiert.
+All dependencies are installed automatically in the notebook.
 
-## 🧪 Beispiel-Output
+## 🧪 Example Output
 
-Siehe [Beispiel-Output](example_output.md) für ein vollständiges Beispiel.
+See [example output](example_output.md) for a complete sample.
 
+## ⚠️ Limitations & Constraints
 
-## ⚠️ Limitationen & Grenzen
+### Technical Limitations
+- **Video length:** Optimized for 2–5 minutes (longer videos require a chunking strategy)
+- **Transcript availability:** Requires subtitles or auto-captions
+- **Language:** Optimized for German/English; other languages may work but are untested
+- **Quote mapping:** ~85% accuracy; similar statements may be confused
 
-### Technische Limitationen
-- **Videolänge:** Optimiert für 2-5 Minuten (längere Videos benötigen - Chunkingstrategie)
-- **Transkript-Verfügbarkeit:** Benötigt Untertitel oder Auto-Captions
-- **Sprache:** Priorisiert Deutsch/Englisch; andere Sprachen möglich aber ungetestet
-- **Zitat-Mapping:** ~85% Genauigkeit; bei ähnlichen Aussagen kann es Verwechslungen geben
+### Content Limitations
+- **Technical jargon:** Highly specialized terminology may lead to incomplete glossaries
+- **Visual content:** Diagrams/demos in videos are not captured
+- **Context:** Irony/sarcasm may be interpreted literally
+- **Multilingual videos:** Language switching can cause fragmented transcripts
 
-### Inhaltliche Limitationen
-- **Fachsprache:** Bei hochspezialisiertem Jargon kann Glossar unvollständig sein
-- **Visuelle Inhalte:** Diagramme/Demos im Video werden nicht erfasst
-- **Kontext:** Ironie/Sarkasmus wird u.U. wörtlich genommen
-- **Mehrsprachigkeit:** Sprachwechsel im Video führen zu fragmentierten Transkripten
-
-### Qualitätsfaktoren
-- **Auto-Captions:** Qualität hängt von YouTube's ASR ab (Namen/Fachbegriffe oft falsch)
-- **LLM-Varianz:** Verschiedene Runs können leicht unterschiedliche Formulierungen erzeugen
-- **Timestamp-Genauigkeit:** ±5 Sekunden durch Satz-Gruppierung
+### Quality Factors
+- **Auto-captions:** Quality depends on YouTube’s ASR (names/technical terms often incorrect)
+- **LLM variance:** Different runs may produce slightly different phrasing
+- **Timestamp accuracy:** ±5 seconds due to sentence grouping
 
 
