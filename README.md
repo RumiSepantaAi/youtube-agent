@@ -92,13 +92,13 @@ YouTube URL
 
 
 ## 📦 Dependencies
-```
+
 yt-dlp>=2024.8.6
 youtube-transcript-api>=0.6.2
 python-slugify>=8.0.4
 openai>=1.40.0
 requests>=2.31.0
-```
+
 
 All dependencies are installed automatically in the notebook.
 
