@@ -1,5 +1,5 @@
 # YouTube AI Agent
-
+![Static Badge](https://img.shields.io/badge/Portfolio_Demo-success)
 AI agent for automatically generating structured Markdown notes from YouTube videos (2–5 minutes).
 
 ## 🎯 Use Case & USP
